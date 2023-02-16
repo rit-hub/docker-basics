@@ -1,0 +1,24 @@
+### ... via docker stack deploy or docker-compose
+
+##### Example stack.yml for postgres:
+
+```sh
+
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+   
+```
