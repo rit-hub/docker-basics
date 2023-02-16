@@ -78,4 +78,49 @@ Password:
 $ docker images
 $ docker push aryan3singh/aryan-repo:latest
 ```
+### Docker Compose
 
+#### docker-compose.yaml
+```sh
+version: "3.7"
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=ritam
+      - MYSQL_PASSWORD=ritam
+      - MYSQL_DATABASE=testdb
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+  app:
+    depends_on:
+      - mysqldb
+    build: .
+    restart: on-failure
+    ports:
+      - 8080:8080
+    environment: 
+      SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false",
+          "spring.datasource.username" : "ritam",
+          "spring.datasource.password" : "ritam",
+          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+          "spring.jpa.hibernate.ddl-auto": "create"
+        }'
+      
+volumes:
+  db:    
+      
+```
+```sh
+$ ls
+Dockerfile  docker-compose.yaml   first-springboot-app-0.0.1-SNAPSHOT.jar
+$ docker compose up -d
+$ docker ps
+
+```
