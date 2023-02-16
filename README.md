@@ -20,3 +20,25 @@ docker ps -a
 docker run --help
 docker run --name hello-container -d hello-world
 ```
+
+
+```sh
+$ docker run --name nginx-container -d nginx
+$ docker images
+$ docker ps -a
+$ docker exec -it nginx-container bin/bash
+root@df05b7fd4c3c:/# curl http://localhost:80
+```
+
+
+```sh
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND    CREATED      STATUSPORTS     NAMES
+df05b7fd4   nginx "/dockert.…"   8 min   Up 8 min  80/tcp nginx-container
+docker stop df05b
+docker ps
+docker ps -a
+docker rm df0f5b
+docker ps -a
+docker run --name nginx-cotainer -d -p 8080:80 nginx
+```
